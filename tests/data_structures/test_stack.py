@@ -39,7 +39,7 @@ def test_stack_empty():
 
 def test_stack_pop(stack: Stack):
     assert stack.size() == _NUM_ELEMENTS
-    for i in range(_NUM_ELEMENTS - 1, -1, -1):
+    for i in reversed(range(_NUM_ELEMENTS)):
         assert stack.pop() == i
     assert stack.size() == 0
 
