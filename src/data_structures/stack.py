@@ -1,6 +1,10 @@
 """This is a ridiculous file, you can use a list instead of this class!"""
 
 
+class StackEmptyError(Exception):
+    ...
+
+
 class Stack:
     def __init__(self):
         self._stack = []
@@ -15,7 +19,11 @@ class Stack:
         self._stack.append(value)
 
     def pop(self):
+        if self.size() == 0:
+            raise StackEmptyError()
         return self._stack.pop()
 
     def peek(self):
+        if self.size() == 0:
+            raise StackEmptyError()
         return self._stack[-1]
