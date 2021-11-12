@@ -1,5 +1,6 @@
 """This is a ridiculous file, you can use a list instead of this class!"""
 
+
 class Stack:
     def __init__(self):
         self._stack = []
