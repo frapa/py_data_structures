@@ -13,9 +13,9 @@ def test_stack_insert():
 
 def test_stack_empty():
     stack = Stack()
-    assert stack.empty() == True
+    assert stack.empty() is True
     stack.insert(1)
-    assert stack.empty() == False
+    assert stack.empty() is False
 
 
 @fixture
