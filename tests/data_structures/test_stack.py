@@ -5,20 +5,20 @@ from src.data_structures.stack import Stack, StackEmptyError
 _NUM_ELEMENTS = 1000
 
 
-def test_stack_insert():
-    stack = Stack()
-    assert stack._stack == []
-    for i in range(_NUM_ELEMENTS):
-        stack.insert(i)
-    assert stack._stack == list(range(_NUM_ELEMENTS))
-
-
 @fixture
 def stack() -> Stack:
     stack = Stack()
     for i in range(_NUM_ELEMENTS):
         stack.insert(i)
     return stack
+
+
+def test_stack_insert():
+    stack = Stack()
+    assert stack._stack == []
+    for i in range(_NUM_ELEMENTS):
+        stack.insert(i)
+    assert stack._stack == list(range(_NUM_ELEMENTS))
 
 
 def test_stack_size(stack: Stack):
