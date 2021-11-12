@@ -7,8 +7,10 @@ _NUM_ELEMENTS = 1000
 
 def test_stack_insert():
     stack = Stack()
+    assert stack._stack == []
     for i in range(_NUM_ELEMENTS):
         stack.insert(i)
+    assert stack._stack == list(range(_NUM_ELEMENTS))
 
 
 def test_stack_empty():
