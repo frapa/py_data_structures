@@ -17,3 +17,4 @@ The following data structures are there:
 - [Stack](./src/data_structures/stack.py)
 - [Queue](./src/data_structures/queue.py) - Circular and Linked Lists
 - [Deque (double-ended queue)](./src/data_structures/queue.py) - Circular and Linked Lists
+- [Graph](./src/data_structures/graph.py)
