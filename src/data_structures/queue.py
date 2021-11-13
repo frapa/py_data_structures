@@ -79,9 +79,9 @@ class _LinkedListQueueBase:
             self._head = DoublyLinkedListItem(value)
             self._tail = self._head
         else:
-            node = DoublyLinkedListItem(value)
-            self._tail.append(node)
-            self._tail = node
+            item = DoublyLinkedListItem(value)
+            self._tail.append(item)
+            self._tail = item
         self._size += 1
 
     def _dequeue(self):
@@ -196,9 +196,9 @@ class LinkedListDeque(_LinkedListQueueBase):
             self._head = DoublyLinkedListItem(value)
             self._tail = self._head
         else:
-            node = DoublyLinkedListItem(value)
-            self._head.prepend(node)
-            self._head = node
+            item = DoublyLinkedListItem(value)
+            self._head.prepend(item)
+            self._head = item
         self._size += 1
 
     def enqueueRight(self, value):
