@@ -13,7 +13,7 @@ of the data structures, including basic tests.
 
 The following data structures are there:
 
-- Linked Lists
-- Stack
-- Queue - Circular and Linked Lists
-- Deque (double-ended queue) - Circular and Linked Lists
+- [Linked Lists](./src/data_structures/linked_list.py)
+- [Stack](./src/data_structures/stack.py)
+- [Queue](./src/data_structures/queue.py) - Circular and Linked Lists
+- [Deque (double-ended queue)](./src/data_structures/queue.py) - Circular and Linked Lists
