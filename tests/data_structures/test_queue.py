@@ -1,21 +1,44 @@
 from pytest import fixture, raises
 
-from src.data_structures.queue import Queue, QueueFullError, QueueEmptyError, Deque
+from src.data_structures.queue import (
+    QueueFullError,
+    QueueEmptyError,
+    Queue,
+    LinkedListQueue,
+    Deque,
+    LinkedListDeque,
+    AnyQueue,
+    AnyDeque,
+)
 
 _MAX_SIZE = 100
 _NUM_ELEMENTS = 50
 
 
-@fixture
-def queue() -> Queue:
-    return Queue(_MAX_SIZE)
+@fixture(
+    params=[Queue, LinkedListQueue],
+    ids=["queue", "ll_queue"],
+)
+def queue(request) -> AnyQueue:
+    if request.param == Queue:
+        return request.param(_MAX_SIZE)
+    else:
+        return request.param()
 
 
-@fixture
-def queue_elements() -> Queue:
-    queue = Queue(_MAX_SIZE)
+@fixture(
+    params=[Queue, LinkedListQueue],
+    ids=["queue", "ll_queue"],
+)
+def queue_elements(request) -> AnyQueue:
+    if request.param == Queue:
+        queue = request.param(_MAX_SIZE)
+    else:
+        queue = request.param()
+
     for i in range(_NUM_ELEMENTS):
         queue.enqueue(i)
+
     return queue
 
 
@@ -27,12 +50,19 @@ def queue_full() -> Queue:
     return queue
 
 
-@fixture
-def deque() -> Deque:
-    return Deque(_MAX_SIZE)
+@fixture(
+    params=[Deque, LinkedListDeque],
+    ids=["deque", "ll_queue"],
+)
+def deque(request) -> AnyDeque:
+    if request.param == Deque:
+        return request.param(_MAX_SIZE)
+    else:
+        return request.param()
 
 
-def test_queue_enqueue(queue: Queue):
+def test_queue_enqueue():
+    queue = Queue(_MAX_SIZE)
     assert queue.max_size == _MAX_SIZE
     assert queue._queue == [None] * (_MAX_SIZE + 1)
     for i in range(_NUM_ELEMENTS):
@@ -42,17 +72,29 @@ def test_queue_enqueue(queue: Queue):
     )
 
 
+def test_ll_queue_enqueue():
+    queue = LinkedListQueue()
+    assert queue._head is None
+    assert queue._tail is None
+    for i in range(_NUM_ELEMENTS):
+        queue.enqueue(i)
+    assert queue._head != queue._tail
+
+
 def test_queue_enqueue_full(queue_full: Queue):
     with raises(QueueFullError):
         queue_full.enqueue(1_000_000)
 
 
-def test_queue_size(queue: Queue, queue_elements: Queue):
+def test_queue_size_initial(queue: AnyQueue):
     assert queue.size() == 0
+
+
+def test_queue_size(queue_elements: AnyQueue):
     assert queue_elements.size() == _NUM_ELEMENTS
 
 
-def test_queue_empty(queue: Queue):
+def test_queue_empty(queue: AnyQueue):
     assert queue.empty() is True
     queue.enqueue(1)
     assert queue.empty() is False
@@ -60,29 +102,31 @@ def test_queue_empty(queue: Queue):
     assert queue.empty() is True
 
 
-def test_queue_dequeue(queue_elements: Queue):
+def test_queue_dequeue(queue_elements: AnyQueue):
     for i in range(_NUM_ELEMENTS):
         assert queue_elements.dequeue() == i
 
 
-def test_queue_dequeue_empty(queue: Queue):
+def test_queue_dequeue_empty(queue: AnyQueue):
     with raises(QueueEmptyError):
         queue.dequeue()
 
 
-def test_queue_peek(queue_elements: Queue):
+def test_queue_peek(queue_elements: AnyQueue):
+    print(queue_elements)
     assert queue_elements.size() == _NUM_ELEMENTS
     assert queue_elements.peek() == 0
     assert queue_elements.size() == _NUM_ELEMENTS
 
 
-def test_queue_peek_empty(queue: Queue):
+def test_queue_peek_empty(queue: AnyQueue):
     with raises(QueueEmptyError):
         queue.peek()
 
 
-def test_queue_circular(queue: Queue):
+def test_queue_circular():
     """Test that the queue properly handles circularity."""
+    queue = Queue(_MAX_SIZE)
     size = 0
     for i in range(2 * _MAX_SIZE - 1):  # -1 to avoid queue being full
         queue.enqueue(i)
@@ -100,36 +144,37 @@ def test_queue_circular(queue: Queue):
     queue.dequeue()
 
 
-def test_deque_enqueueRight_dequeueLeft(deque: Deque):
+def test_deque_enqueueRight_dequeueLeft(deque: AnyDeque):
     for i in range(_NUM_ELEMENTS):
         deque.enqueueRight(i)
     for i in range(_NUM_ELEMENTS):
         assert deque.dequeueLeft() == i
 
 
-def test_deque_enqueueRight_dequeueRight(deque: Deque):
+def test_deque_enqueueRight_dequeueRight(deque: AnyDeque):
     for i in range(_NUM_ELEMENTS):
         deque.enqueueRight(i)
     for i in reversed(range(_NUM_ELEMENTS)):
         assert deque.dequeueRight() == i
 
 
-def test_deque_enqueueLeft_dequeueLeft(deque: Deque):
+def test_deque_enqueueLeft_dequeueLeft(deque: AnyDeque):
     for i in range(_NUM_ELEMENTS):
         deque.enqueueRight(i)
     for i in range(_NUM_ELEMENTS):
         assert deque.dequeueLeft() == i
 
 
-def test_deque_enqueueLeft_dequeueRight(deque: Deque):
+def test_deque_enqueueLeft_dequeueRight(deque: AnyDeque):
     for i in range(_NUM_ELEMENTS):
         deque.enqueueRight(i)
     for i in reversed(range(_NUM_ELEMENTS)):
         assert deque.dequeueRight() == i
 
 
-def test_deque_circular(deque: Deque):
+def test_deque_circular():
     """Test that the deque properly handles circularity."""
+    deque = Deque(_MAX_SIZE)
     size = 0
     for i in range(2 * _MAX_SIZE - 1):  # -1 to avoid queue being full
         deque.enqueueRight(i)
