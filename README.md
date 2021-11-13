@@ -21,6 +21,6 @@ The following data structures are implemented:
 
 The following algorithms are implemented:
 
-- [Depth-first search](./src/algorithms/graph.py) - Both recursive and iterative variant 
+- [Depth-first search](./src/algorithms/graph_search.py) - Both recursive and iterative variant 
   (the last one is 10x faster and does not cause max stack depth errors for large graphs). 
-- [Breadth-first search](./src/algorithms/graph.py)
+- [Breadth-first search](./src/algorithms/graph_search.py)

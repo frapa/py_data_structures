@@ -4,7 +4,7 @@ from contextlib import nullcontext
 from pytest import fixture, mark, raises
 
 from src.data_structures.graph import Node
-from src.algorithms.graph import depth_first, breadth_first
+from src.algorithms.graph_search import depth_first, breadth_first
 
 
 @fixture
