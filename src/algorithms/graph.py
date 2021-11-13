@@ -30,7 +30,7 @@ def _depth_first_rec(start: Node, visited: Set[Node] = None) -> Iterable[Node]:
 
 
 def _depth_first_iter(start: Node) -> Iterable[Node]:
-    """Iterative DF version.
+    """Iterative DF version, typical implementation using a stack.
 
     This is more than 10x faster than the other version.
     """
@@ -50,3 +50,22 @@ def _depth_first_iter(start: Node) -> Iterable[Node]:
         # Reversed to keep the same ordering as other function
         for adj_node in reversed(node.adjacent.keys()):
             stack.insert(adj_node)
+
+
+def breadth_first(start: Node) -> Iterable[Node]:
+    """Breadth first search, typical implementation using a queue."""
+    queue = LinkedListQueue()
+    queue.enqueue(start)
+
+    visited = set()
+    while not queue.empty():
+        node = queue.dequeue()
+
+        if node in visited:
+            continue
+        visited.add(node)
+
+        yield node
+
+        for adj_node in node.adjacent.keys():
+            queue.enqueue(adj_node)

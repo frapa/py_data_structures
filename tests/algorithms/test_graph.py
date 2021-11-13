@@ -4,7 +4,7 @@ from contextlib import nullcontext
 from pytest import fixture, mark, raises
 
 from src.data_structures.graph import Node
-from src.algorithms.graph import depth_first
+from src.algorithms.graph import depth_first, breadth_first
 
 
 @fixture
@@ -42,6 +42,7 @@ def test_depth_first(algo: str, nodes: List[Node], graph: Node):
 def test_depth_performances(algo: str, large_graph: Node):
     graph, num_nodes = large_graph
 
+    # 1000 is the maximum stack depth in python by default
     if algo == "recursive" and num_nodes > 1000:
         context = raises(RecursionError)
         print("Exception expected!")
@@ -51,3 +52,8 @@ def test_depth_performances(algo: str, large_graph: Node):
     with context:
         for _ in depth_first(graph, algo):
             pass
+
+
+def test_breadth_first(nodes: List[Node], graph: Node):
+    df_values = [node.value for node in breadth_first(graph)]
+    assert df_values == [1, 2, 3, 5, 4]
