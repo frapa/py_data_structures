@@ -18,6 +18,8 @@ The following data structures are implemented:
 - [Queue](./src/data_structures/queue.py) - Circular and Linked Lists
 - [Deque (double-ended queue)](./src/data_structures/queue.py) - Circular and Linked Lists
 - [Graph](./src/data_structures/graph.py)
+- [Trees](./src/data_structures/tree.py) - With and without parent reference, 
+  specialized classes for binary trees.
 
 The following algorithms are implemented:
 
