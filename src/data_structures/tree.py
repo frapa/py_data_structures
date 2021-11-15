@@ -1,19 +1,16 @@
 from __future__ import annotations
 from dataclasses import dataclass, field
-from typing import Any, List, Optional
-
-
-@dataclass
-class SimpleNode:
-    value: Any
-    children: List[SimpleNode] = field(default_factory=list)
+from typing import Any, List, Optional, Dict
 
 
 @dataclass
 class Node:
     value: Any
+    # Leave empty if tree has no parent link
     parent: Optional[Node] = None
     children: List[Node] = field(default_factory=list)
+    # Can be used to implement stuff like red-black trees
+    attrs: Dict[str, Any] = field(default_factory=dict)
 
     @staticmethod
     def _normalize_node(node: Any) -> Node:
@@ -37,20 +34,14 @@ class Node:
 
 
 @dataclass
-class BinarySimpleNode:
-    """Specialized variant for binary trees."""
-
-    value: Any
-    left: Optional[BinarySimpleNode] = None
-    right: Optional[BinarySimpleNode] = None
-
-
-@dataclass
 class BinaryNode:
     value: Any
+    # Leave empty if tree has no parent link
     parent: Optional[BinaryNode] = None
     left: Optional[BinaryNode] = None
     right: Optional[BinaryNode] = None
+    # Can be used to implement stuff like red-black trees
+    attrs: Dict[str, Any] = field(default_factory=dict)
 
     @staticmethod
     def _normalize_node(node: Any) -> BinaryNode:
