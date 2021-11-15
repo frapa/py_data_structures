@@ -20,6 +20,7 @@ The following data structures are implemented:
 - [Graph](./src/data_structures/graph.py)
 - [Trees](./src/data_structures/tree.py) - With and without parent reference, 
   specialized classes for binary trees.
+- [Heaps](./src/data_structures/heap.py)
 
 The following algorithms are implemented:
 
