@@ -41,8 +41,11 @@ class Heap:
             return 0
         return (i - 1) // 2
 
+    def size(self) -> int:
+        return len(self._heap)
+
     def _valid(self, i: int) -> bool:
-        if i >= len(self._heap):
+        if i >= self.size():
             return False
         return True
 
@@ -67,7 +70,7 @@ class Heap:
             self._fix_children(largest)
 
     def _build_heap(self):
-        for i in reversed(range(len(self._heap) // 2)):
+        for i in reversed(range(self.size() // 2)):
             self._fix_children(i)
 
     def _fix_parent(self, i: int):
@@ -79,9 +82,16 @@ class Heap:
 
     def insert(self, value):
         self._heap.append(value)
-        self._fix_parent(len(self._heap) - 1)
+        self._fix_parent(self.size() - 1)
 
     def peek(self):
         if not self._heap:
             raise HeapEmptyError("The heap is empty, cannot peek.")
         return self._heap[0]
+
+    def pop(self):
+        last = self.size() - 1
+        self._swap(0, last)
+        value = self._heap.pop()
+        self._fix_children(0)
+        return value
