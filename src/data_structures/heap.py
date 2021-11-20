@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Sequence, Callable
+from typing import List
 
 
 def heap_max(a, b) -> bool:
@@ -19,11 +20,13 @@ class Heap:
     def __init__(self, cmp: Callable = heap_max):
         self._heap = []
         self._cmp = cmp
+        self._size = 0
 
     @classmethod
-    def from_sequence(cls, sequence: Sequence) -> Heap:
-        heap = cls()
+    def from_sequence(cls, sequence: Sequence, cmp: Callable = heap_max) -> Heap:
+        heap = cls(cmp)
         heap._heap = list(sequence)
+        heap._size = len(sequence)
         heap._build_heap()
         return heap
 
@@ -42,7 +45,7 @@ class Heap:
         return (i - 1) // 2
 
     def size(self) -> int:
-        return len(self._heap)
+        return self._size
 
     def _valid(self, i: int) -> bool:
         if i >= self.size():
@@ -82,6 +85,7 @@ class Heap:
 
     def insert(self, value):
         self._heap.append(value)
+        self._size += 1
         self._fix_parent(self.size() - 1)
 
     def peek(self):
@@ -93,5 +97,15 @@ class Heap:
         last = self.size() - 1
         self._swap(0, last)
         value = self._heap.pop()
+        self._size -= 1
         self._fix_children(0)
         return value
+
+    def heap_sort(self) -> List:
+        """This operation makes the heap unusable afterwards."""
+        for i in range(self.size()):
+            self._swap(0, len(self._heap) - i - 1)
+            self._size -= 1
+            self._fix_children(0)
+
+        return self._heap

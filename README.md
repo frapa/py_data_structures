@@ -28,3 +28,9 @@ The following algorithms are implemented:
   (the last one is 10x faster and does not cause max stack depth errors for large graphs). 
 - [Breadth-first search](./src/algorithms/graph_search.py)
 - [Running median](./src/algorithms/median.py) - Using two heaps.
+- [Sorting](./src/algorithms/sorting.py):
+  - Insertion sort.
+  - Merge sort.
+  - Heap sort.
+  - Quick sort.
+
